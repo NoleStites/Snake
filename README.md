@@ -20,5 +20,5 @@ Guide the snake to consume apples to grow in length and increase your score. The
 * **D-pad**: Toggle the on-screen directional buttons via the checkbox beneath the game board for precise tactile control.
 
 **Customization**
-Use the theme selector at the bottom of the screen to switch color palettes instantly during your session.
+Use the theme selector at the top of the menu to switch color palettes to your liking.
 

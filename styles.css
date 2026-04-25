@@ -1,0 +1,470 @@
+:root {
+    --mainBorderSize: 10px;
+    --accent-color: rgb(206, 206, 206);
+    --dpadDirectionSize: 30%;
+    --dpadPadding: 10px;
+
+    --page-bg: #0B0E14;
+    --board-bg: #151921;
+    --snake-color: #F0DB4F;
+    --apple-color: #FF00FF;
+    --ui-text: #4E5569;
+    --splash-bg: rgba(11, 14, 20, 0.9);
+    --title-text: #FF00FF;
+    --btn-text: #F0DB4F;
+    --label-text: #343A46;
+    --end-bg: rgba(7, 9, 13, 0.98);
+    --end-title: #FF00FF;
+
+    --overlay: rgba(5, 7, 10, 0.95);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+
+.pixelify-sans-title {
+  font-family: "Pixelify Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.flex {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+body, div, canvas {
+    transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+body {
+    margin: 0;
+    /* width: 100vw; */
+    height: 100dvh;
+    display: flex;
+    background-color: var(--page-bg);
+    overflow: hidden;
+    touch-action: none;
+}
+
+#content {
+    width: 100%;
+    height: 100%;
+    aspect-ratio: 12 / 24; 
+    max-width: 600px;
+    /* max-height: 100%; */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    margin: auto;
+    padding: 10px;
+    box-sizing: border-box;
+    /* background-color: green; */
+}
+
+.hidden {
+    opacity: 0;
+}
+
+#score {
+    color: var(--ui-text);
+    font-family: monospace;
+    font-size: 2rem;
+}
+
+#gameBox {
+    position: relative;
+
+    /* Based on 12:20 ratio */
+    /* width: 54vmin;   */
+    /* height: 90vmin; */
+    max-width: 100%;
+    max-height: 80%;
+    aspect-ratio: 12/20;
+    /* box-sizing: border-box; */
+
+    
+    /* Ensure it doesn't get distorted */
+    /* object-fit: contain; */
+
+    /* border: 8px solid #222;
+    border-radius: 10px; 
+    box-shadow: 
+        inset 0 0 20px rgba(0,0,0,1),
+        0 0 15px var(--apple-color);  */
+
+    border: 2px solid var(--snake-color); /* Inner line */
+    outline: 4px solid var(--page-bg);     /* Gap */
+    box-shadow: 0 0 0 2px var(--snake-color); /* Outer line */
+}
+
+/* Stripes on game board */
+#gameBox::after {
+    content: "";
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    /* Creates tiny horizontal black transparent lines */
+    background: linear-gradient(
+        rgba(18, 16, 16, 0) 50%, 
+        rgba(0, 0, 0, 0.1) 50%
+    );
+    background-size: 100% 4px; /* Adjust 4px to make lines thicker or thinner */
+    z-index: 10;
+    pointer-events: none; /* Allows clicks to go through to the game */
+}
+
+#splashScreen {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: var(--splash-bg);
+    flex-direction: column;
+    gap: 30px;
+    /* display: none; */
+}
+
+#title {
+    font-size: 5rem;
+    color: var(--title-text);
+}
+
+#startBtn {
+    /* background-color: transparent; */
+    border: none;
+    /* color: black; */
+    /* border-left: 3px solid black; */
+    /* border-right: 3px solid black; */
+    /* border-radius: 8%; */
+
+    background: transparent;
+    border: 2px solid var(--btn-text);
+    color: var(--btn-text);
+    padding: 15px 30px;
+    font-family: monospace;
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    cursor: pointer;
+
+    /* The 'steps(1)' ensures there is no transition period at all */
+    animation: binary-flash 0.8s infinite steps(1);
+}
+
+@keyframes binary-flash {
+    0%, 49% {
+        opacity: 1;
+        /* Optional: keeps the glow only when visible */
+        text-shadow: 0 0 10px var(--btn-text);
+    }
+    50%, 100% {
+        opacity: 0;
+        text-shadow: none;
+    }
+}
+
+#theme-box {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    top: 10px;
+    color: white;
+}
+
+#theme-box label, #dpad-input-box label {
+    color: var(--label-text);
+    font-family: monospace;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+#theme-select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    
+    background-color: transparent;
+    color: var(--label-text);
+    border: 1px solid var(--label-text);
+    padding: 5px 30px 5px 10px;
+    font-family: monospace;
+    cursor: pointer;
+
+    background-image: linear-gradient(45deg, transparent 50%, var(--label-text) 50%),
+                      linear-gradient(135deg, var(--label-text) 50%, transparent 50%);
+    background-position: calc(100% - 15px) calc(1em + 2px),
+                         calc(100% - 10px) calc(1em + 2px);
+    background-size: 5px 5px,
+                     5px 5px;
+    background-repeat: no-repeat;
+}
+
+#theme-select option {
+    background-color: var(--board-bg);
+    color: var(--label-text);
+}
+
+#gameCanvas {
+    opacity: 0;
+    width: 100%;
+    /* aspect-ratio: 12/20; */
+    /* max-height: 90vh; */
+    /* height: auto; */
+    /* height: 100%; */
+    background-color: var(--board-bg);
+}
+
+#game-end-splash {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--end-bg);
+    backdrop-filter: blur(4px); /* Blurs the snake/food behind the screen */
+    z-index: 2;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    display: none; /* Controlled by JS */
+}
+
+/* The 'Game Over' Text */
+#end-title {
+    color: var(--end-title);
+    font-family: monospace;
+    font-size: 3rem;
+    letter-spacing: 8px;
+    margin: 0;
+    /* Reuse your binary flash here for an arcade feel */
+    animation: binary-flash 0.4s infinite steps(1); 
+}
+
+/* The Score */
+#end-score {
+    color: var(--snake-color);
+    font-family: monospace;
+    font-size: 1.5rem;
+    margin-bottom: 30px;
+}
+
+/* The Menu Button */
+#menu-btn {
+    background: transparent;
+    border: 1px solid var(--ui-text);
+    color: var(--ui-text);
+    padding: 10px 25px;
+    font-family: monospace;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: all 0.2s steps(1);
+}
+
+#menu-btn:hover {
+    background-color: var(--ui-text);
+    color: var(--page-bg);
+}
+
+.arcade-checkbox {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 18px;
+    height: 18px;
+    border: 1px solid var(--label-text); /* Matches your theme label */
+    background: transparent;
+    cursor: pointer;
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+    transition: all 0.2s ease;
+}
+
+.arcade-checkbox:checked {
+    border-color: var(--apple-color);
+    background-color: transparent;
+}
+
+.arcade-checkbox:checked::after {
+    content: "";
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 10px;
+    height: 10px;
+    background-color: var(--apple-color);
+    /* Adding a subtle glow to match your arcade buttons */
+    box-shadow: 0 0 5px var(--apple-color);
+}
+
+.arcade-checkbox:hover {
+    border-color: var(--btn-text);
+}
+
+#dpad-input-box {
+    position: relative;
+    font-size: 2.5vmin;
+    z-index: 4;
+}
+
+#dpad-input-box label {
+    color: var(--label-text);
+}
+
+#dpad {
+    display: none; /* Toggled by your checkbox logic */
+    width: 150px;
+    aspect-ratio: 1/1;
+    position: absolute;
+    right: 20px;
+    bottom: 20px;
+    z-index: 3;
+    /* We remove the background-color and shadow for a cleaner look */
+}
+
+.dpadDirection {
+    width: 45px;
+    aspect-ratio: 1/1;
+    background-color: var(--board-bg);
+    border: 2px solid var(--label-text);
+    color: var(--label-text);
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    cursor: pointer;
+    transition: all 0.1s steps(1); /* Binary snap on press */
+}
+
+/* Arcade Feedback: Light up when pressed */
+.dpadDirection:active {
+    background-color: var(--apple-color);
+    border-color: var(--apple-color);
+    color: var(--page-bg);
+    box-shadow: 0 0 10px var(--apple-color);
+}
+
+/* Positioning the 'Plus' Shape */
+#dpadUp {
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 4px 4px 0 0;
+}
+#dpadDown {
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 0 0 4px 4px;
+}
+#dpadLeft {
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    border-radius: 4px 0 0 4px;
+}
+#dpadRight {
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    border-radius: 0 4px 4px 0;
+}
+
+
+
+/* Mobile (portrait phones ≤ 480px) */
+@media (max-width: 480px) {
+    :root {
+        --dpadPadding: 5px;
+    }
+    #dpad {
+        width: 180px;
+    }
+}
+
+@media (max-height: 780px) {
+    #content {
+        gap: 15px;
+    }
+
+    #score {
+        font-size: 1.5rem;
+    }
+
+    #end-title {
+        font-size: 2rem;
+    }
+
+    #end-score {
+        font-size: 1.2rem;
+    }
+}
+
+@media (max-height: 580px) {
+    #content {
+        gap: 10px;
+    }
+
+    #title {
+        font-size: 3rem;
+    }
+
+    #startBtn {
+        border: 2px solid var(--btn-text);
+        padding: 10px 20px;
+        font-size: 1rem;
+    }
+
+    #end-title {
+        font-size: 1.3rem;
+    }
+
+    #end-score {
+        font-size: 1rem;
+    }
+}
+
+@media (max-height: 450px) {
+    #content {
+        gap: 10px;
+    }
+
+    #score {
+        font-size: 1rem;
+    }
+
+    #theme-box label, #dpad-input-box label, #theme-select {
+        font-size: 0.6rem;
+    }
+
+    #title {
+        font-size: 2rem;
+    }
+
+    #startBtn {
+        border: 2px solid var(--btn-text);
+        padding: 5px 10px;
+        font-size: 0.7rem;
+    }
+
+    #end-title {
+        font-size: 0.8rem;
+    }
+
+    #end-score {
+        font-size: 0.7rem;
+    }
+
+    #menu-btn {
+        padding: 7px 15px;
+    }
+}

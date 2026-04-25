@@ -1,0 +1,101 @@
+/* 1. Monolith (The Matrix) */
+[data-theme="monolith"] {
+    --page-bg: #000000;
+    --board-bg: #080808;
+    --snake-color: #FFFFFF;
+    --apple-color: #00FF41;
+    --ui-text: #444444;
+    /* Splash Screen */
+    --splash-bg: rgba(0, 0, 0, 0.9);
+    --title-text: #00FF41;
+    --btn-text: #00FF41;
+    --label-text: #222222;
+    /* Game End */
+    --end-bg: rgba(0, 0, 0, 0.95);
+    --end-title: #00FF41;
+}
+
+/* 2. Nord Frost (Arctic) */
+[data-theme="nord"] {
+    --page-bg: #2E3440;
+    --board-bg: #3B4252;
+    --snake-color: #88C0D0;
+    --apple-color: #BF616A;
+    --ui-text: #D8DEE9;
+    /* Splash Screen */
+    --splash-bg: rgba(46, 52, 64, 0.95);
+    --title-text: #E5E9F0;
+    --btn-text: #88C0D0;
+    --label-text: #4C566A;
+    /* Game End */
+    --end-bg: rgba(36, 41, 51, 0.9);
+    --end-title: #BF616A;
+}
+
+/* 3. Parchment (Zen Minimalist) */
+[data-theme="parchment"] {
+    --page-bg: #F5F2E9;
+    --board-bg: #EBE7DA;
+    --snake-color: #4A5D4E;
+    --apple-color: #C1666B;
+    --ui-text: #8C8A81;
+    /* Splash Screen */
+    --splash-bg: rgba(245, 242, 233, 0.98);
+    --title-text: #4A5D4E;
+    --btn-text: #C1666B;
+    --label-text: #B4B2A9;
+    /* Game End */
+    --end-bg: rgba(235, 231, 218, 0.95);
+    --end-title: #C1666B;
+}
+
+/* 4. Cyberpunk (Night City) */
+[data-theme="cyberpunk"] {
+    --page-bg: #0B0E14;
+    --board-bg: #151921;
+    --snake-color: #F0DB4F;
+    --apple-color: #FF00FF;
+    --ui-text: #4E5569;
+    /* Splash Screen */
+    --splash-bg: rgba(11, 14, 20, 0.9);
+    --title-text: #FF00FF;
+    --btn-text: #F0DB4F;
+    --label-text: #343A46;
+    /* Game End */
+    --end-bg: rgba(7, 9, 13, 0.98);
+    --end-title: #FF00FF;
+}
+
+/* 5. Blue Hour (Technical) */
+[data-theme="blue"] {
+    --page-bg: #05070A;
+    --board-bg: #0D1117;
+    --snake-color: #58A6FF;
+    --apple-color: #F85149;
+    --ui-text: #8B949E;
+    /* Splash Screen */
+    --splash-bg: rgba(5, 7, 10, 0.9);
+    --title-text: #58A6FF;
+    --btn-text: #FFFFFF;
+    --label-text: #484F58;
+    /* Game End */
+    --end-bg: rgba(3, 4, 6, 0.95);
+    --end-title: #F85149;
+}
+
+/* 6. Dracula (Obsidian & Crimson) */
+[data-theme="vampire"] {
+    --page-bg: #100C0D;
+    --board-bg: #1A1415;
+    --snake-color: #E9E9E9;
+    --apple-color: #950101;
+    --ui-text: #5C4B4B;
+    /* Splash Screen */
+    --splash-bg: rgba(16, 12, 13, 0.98);
+    --title-text: #950101;
+    --btn-text: #E9E9E9;
+    --label-text: #3D2B2B;
+    /* Game End */
+    --end-bg: rgba(0, 0, 0, 0.98);
+    --end-title: #950101;
+}

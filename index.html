@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <title>Snake</title>
+        <link href="./styles.css" rel="stylesheet" />
+        <link href="./palettes.css" rel="stylesheet" />
+        
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&display=swap" rel="stylesheet">
+        
+        <script src="./script.js" defer></script>
+    </head>
+    <body>
+        <div id="content">
+        <h1 id="score" class="hidden">--</h1>
+        <div id="gameBox" class="flex">
+            <canvas id="gameCanvas" width="100" height="100"></canvas>
+
+            <section id="splashScreen" class="flex">
+                <h1 id="title" class="pixelify-sans-title">Snake</h1>
+                <button id="startBtn" class="pixelify-sans-title" onclick="startGameLoop()">START</button>
+                
+                <div id="theme-box">
+                    <label for="theme-select">Theme</label>
+                    <select id="theme-select">
+                        <option value="cyberpunk">Cyberpunk</option>
+                        <option value="monolith">Monolith</option>
+                        <option value="nord">Nord Frost</option>
+                        <option value="parchment">Parchment</option>
+                        <option value="blue">Blue</option>
+                        <option value="vampire">Vampire</option>
+                    </select>
+                </div>
+            </section>
+
+            <section id="game-end-splash" class="flex">
+                <h1 id="end-title">GAME OVER</h1>
+                <h1 id="end-score">Score: --</h1>
+                <button id="menu-btn" onclick="showMenu()">MENU</button>
+            </section>
+
+        </div>
+
+        <div id="dpad-input-box">
+            <label for="dpad-toggle">Dpad</label>
+            <input id="dpad-toggle" type="checkbox" class="arcade-checkbox" unchecked>
+        </div>
+
+        <div id="dpad" tabindex="-1">
+            <button id="dpadUp" class="dpadDirection" tabindex="-1">▲</button>
+            <button id="dpadDown" class="dpadDirection" tabindex="-1">▼</button>
+            <button id="dpadLeft" class="dpadDirection" tabindex="-1">◀</button>
+            <button id="dpadRight" class="dpadDirection" tabindex="-1">▶</button>
+        </div>
+        </div>
+    </body>
+</html>
